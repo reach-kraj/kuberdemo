@@ -1,0 +1,9 @@
+target/
+!target/kuberdemo-0.0.1-SNAPSHOT.jar
+.git
+.gitignore
+README.md
+Dockerfile
+.dockerignore
+helm/
+.github/
