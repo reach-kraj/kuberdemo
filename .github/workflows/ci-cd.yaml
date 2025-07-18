@@ -106,9 +106,8 @@ jobs:
           export KUBECONFIG=$PWD/kubeconfig
           kubectl config use-context kubernetes-admin@kubernetes
           kubectl get nodes
-          
-          
-          - name: Deploy to Kubernetes
+
+      - name: Deploy to Kubernetes
         run: |
           helm upgrade --install kuberdemo ${{ env.HELM_CHART_PATH }} \
             --set image.repository=${{ env.DOCKER_IMAGE }} \
@@ -116,3 +115,4 @@ jobs:
             --wait
           kubectl get pods -l app.kubernetes.io/name=kuberdemo-chart
           kubectl get svc -l app.kubernetes.io/name=kuberdemo-chart
+    
