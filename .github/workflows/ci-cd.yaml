@@ -101,20 +101,18 @@ jobs:
 
       - name: Set up Kubeconfig
         run: |
-          echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 -d > kubeconfig
+          echo "${{ secrets.KUBECONFIG_GZ_BASE64 }}" | base64 -d > kubeconfig.gz
+          gunzip -c kubeconfig.gz > kubeconfig
           export KUBECONFIG=$PWD/kubeconfig
           kubectl config use-context kubernetes-admin@kubernetes
           kubectl get nodes
-
-      - name: Deploy to Kubernetes
+          
+          
+          - name: Deploy to Kubernetes
         run: |
-          export KUBECONFIG=$PWD/kubeconfig
-          echo "Deploying to Kubernetes cluster..."
           helm upgrade --install kuberdemo ${{ env.HELM_CHART_PATH }} \
             --set image.repository=${{ env.DOCKER_IMAGE }} \
             --set image.tag=latest \
             --wait
-          echo "Deployment completed!"
           kubectl get pods -l app.kubernetes.io/name=kuberdemo-chart
           kubectl get svc -l app.kubernetes.io/name=kuberdemo-chart
-  
