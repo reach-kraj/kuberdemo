@@ -8,7 +8,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 public class UserController {
-//test
+
     @GetMapping("/hello")
     public Map<String, String> hello() {
         return Map.of(
